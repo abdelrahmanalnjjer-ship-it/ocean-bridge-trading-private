@@ -61,6 +61,57 @@ Lead queues:
 
 Scoring routes leads; it should not automatically remove phone-only or low-digital-presence companies.
 
+### Expo-first confidence rules
+
+Official seafood expo exhibitor lists from the most recent five years are the first sourcing priority.
+
+- official organizer list within 0–2 years: strongest source-confidence signal
+- official organizer list within 3–5 years: strong source-confidence signal
+- repeated exhibitor across years: additional confidence
+- exhibitor product/category match: additional product-fit evidence
+- data older than five years: discovery evidence only and must be refreshed
+
+Expo evidence increases data confidence. It does not automatically prove current buyer intent. Final qualification still requires evidence that the company imports, buys, processes, distributes, wholesales, trades, stores, or resells seafood.
+
+## V1 Identity and Deduplication
+
+Keep company deduplication simple:
+
+1. normalized domain when available
+2. otherwise normalized company name plus country
+3. email domain as supporting evidence when the website domain is missing
+
+Do not add legal-entity, branch, or location identity models in V1.
+
+A company may have many contacts. Different employees or departments at the same company remain separate contacts. Deduplicate contacts by normalized email first, then normalized phone or WeChat within the same company.
+
+## Cost and Model Policy
+
+The reported $100 spend for 53 raw company leads equals about $1.89 per raw lead and fails V1 economics, especially because employee enrichment was not completed.
+
+No paid-model batch should run until provider-level usage is logged and a hard budget gate is active.
+
+V1 cost targets:
+
+- raw company candidate: at or below $0.10
+- contactable company: at or below $0.30
+- qualified contact: at or below $0.50
+
+Controlled tests:
+
+- maximum $5 per test run
+- 10–20 companies per test
+- stop automatically when the campaign or execution budget is reached
+
+Model order:
+
+1. deterministic code, SQL, regex, cache, and public structured data
+2. NVIDIA-hosted model for bounded extraction or classification
+3. local model after the workflow is stable
+4. premium paid model only as an approved fallback
+
+AI models must not be the primary company-discovery engine. They may generate search plans, classify ambiguous evidence, translate difficult text, or summarize sources after cheaper methods fail.
+
 ## V1 Automation Boundary
 
 ### V1 includes
