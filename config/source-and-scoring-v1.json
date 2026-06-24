@@ -1,0 +1,79 @@
+{
+  "version": "1.1.0",
+  "source_priority": [
+    "official_expo_exhibitor_lists_last_5_years",
+    "official_company_websites",
+    "industry_associations",
+    "public_trade_directories",
+    "public_search_results",
+    "paid_collection_only_after_public_sources"
+  ],
+  "model_ladder": [
+    "deterministic_code_sql_regex_cache",
+    "nvidia_hosted_model_for_bounded_tasks",
+    "local_model_after_workflow_stabilization",
+    "premium_paid_model_as_approved_fallback"
+  ],
+  "dimension_caps": {
+    "buyer_likelihood": 30,
+    "product_fit": 20,
+    "reachability": 25,
+    "data_confidence": 20,
+    "beginner_accessibility": 5
+  },
+  "data_confidence_weights": {
+    "official_expo_0_to_2_years": 15,
+    "official_expo_3_to_5_years": 12,
+    "repeat_exhibitor_bonus": 5,
+    "current_official_website": 5,
+    "official_industry_association": 8,
+    "public_directory_only": 3,
+    "older_than_5_years_requires_refresh": 1
+  },
+  "buyer_likelihood_weights": {
+    "explicit_importer_or_buyer_evidence": 30,
+    "processor_distributor_wholesaler_evidence": 22,
+    "seafood_trading_company_evidence": 18,
+    "seafood_industry_relevance_only": 8
+  },
+  "product_fit_weights": {
+    "exact_campaign_product_match": 20,
+    "related_seafood_category_match": 12,
+    "general_seafood_only": 5
+  },
+  "reachability_weights": {
+    "verified_named_business_email": 12,
+    "verified_generic_business_email": 8,
+    "business_phone": 6,
+    "wechat": 8,
+    "contact_form": 3
+  },
+  "beginner_accessibility_weights": {
+    "english_contact_path": 3,
+    "clear_procurement_or_sales_channel": 2
+  },
+  "queue_thresholds": {
+    "quick_win": 70,
+    "strategic": 60,
+    "dark_market": 45,
+    "manual_review": 30,
+    "rejected_below": 30
+  },
+  "cost_targets_usd": {
+    "raw_company_candidate": 0.10,
+    "contactable_company": 0.30,
+    "qualified_contact": 0.50,
+    "controlled_test_run_cap": 5.00
+  },
+  "deduplication": {
+    "company_primary": "normalized_domain",
+    "company_fallback": "normalized_company_name_plus_country",
+    "supporting_signal": "email_domain",
+    "contact_primary": "normalized_email_within_company",
+    "contact_fallbacks": [
+      "normalized_phone_within_company",
+      "normalized_wechat_within_company"
+    ],
+    "allow_multiple_contacts_per_company": true
+  }
+}
