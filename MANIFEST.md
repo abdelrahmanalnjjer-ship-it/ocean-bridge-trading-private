@@ -1,6 +1,6 @@
 # Backup Manifest
 
-**Last updated:** 23 June 2026
+**Last updated:** 24 June 2026
 
 ## Included in this repository
 
@@ -17,6 +17,8 @@
 - decisions log
 - project backup status
 - current limitations
+- cost-ledger and hard-budget migration: `database/migrations/20260624_001_cost_ledger.sql`
+- expo-first source priority and typed scoring config: `config/source-and-scoring-v1.json`
 
 ## Not Yet Fully Included
 
@@ -26,7 +28,7 @@ Still missing unless separately recovered or rebuilt:
 
 - remaining Python scripts
 - remaining n8n workflow exports beyond Workflow 01
-- complete SQL migrations
+- complete historical SQL migrations
 - complete seed data
 - test suite
 - campaign configuration files
@@ -36,7 +38,7 @@ Still missing unless separately recovered or rebuilt:
 
 ## Current Backup Classification
 
-`Partial canonical backup — documentation plus Workflow 01`
+`Partial canonical backup — documentation, Workflow 01, cost-control migration, and V1 scoring configuration`
 
 The repository is usable as the current project center, but it is not yet a complete reproducible backup.
 
