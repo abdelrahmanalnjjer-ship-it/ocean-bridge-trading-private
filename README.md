@@ -1,59 +1,81 @@
-# Ocean Bridge Trading — China Seafood Buyer Engine
+# CrowdSpark Lead Engine V1
 
-Private source-of-truth repository for the China seafood buyer automation project.
+Current implementation snapshot for the Ocean Bridge Trading lead-to-deal engine.
 
-**Last repository audit:** 23 June 2026  
-**Canonical branch:** `main`
+**Snapshot date:** 2026-06-27  
+**Runtime:** n8n Cloud + PostgreSQL (Neon)  
+**Project:** Abdelrahman Elnaggar personal n8n project
 
-## V1 Goal
+## Current operating model
 
-Build an n8n-first workflow that takes a campaign input and automatically discovers Chinese seafood buyers, normalizes and deduplicates records, crawls public sources, extracts evidence, finds contacts, verifies emails, scores leads, drafts outreach, follows up, monitors replies, and alerts the user when a quotation is requested.
+CrowdSpark is a demand-first B2B seafood sourcing engine:
 
-## Business Scope
+```text
+Product intelligence
+→ campaign and ICP
+→ company discovery
+→ website evidence extraction
+→ value scoring
+→ public contact capture
+→ optional ScrapeGraph fallback
+→ optional Apollo enrichment
+→ optional MillionVerifier verification
+→ deterministic outreach draft
+→ owner approval and send gate
+→ buyer reply and RFQ intake
+→ Oman sourcing request
+→ supplier offer and quotation
+→ deal, shipment, and commission tracking
+```
 
-- Target buyers: any legitimate Chinese commercial buyer able to import, buy, distribute, process, wholesale, or resell seafood from Oman.
-- Weak digital presence is not a rejection reason; phone-only and WeChat-first businesses are included.
-- Product scope: all seafood legally exportable from Oman and relevant to China.
-- Campaigns focus on active seasonal products.
-- Minimum commercial quantity: one container.
-- No minimum company size, revenue, or commission threshold for V1.
+## Safety state
 
-## V1 Boundary
+- Automatic paid enrichment: disabled
+- Automatic email verification: disabled
+- Automatic ScrapeGraph execution: disabled
+- Automatic email sending: disabled
+- Campaigns with sending enabled: 0
+- Emails sent: 0
+- Real RFQs: 0
+- Real quotations: 0
+- Real deals: 0
 
-V1 ends when a buyer requests a quotation. Supplier pricing, negotiation, documents, commission protection, and shipment remain manual for now.
+## Current live data
 
-## Core Stack
+- Campaigns: 3
+- Companies: 142
+- Campaign-company opportunities: 56
+- Contacts: 2
+- Verified-valid contacts: 0
+- ScrapeGraph queue: 2
+- Product intelligence records: 33
+- Search jobs: 238
+- Cost events: 234
+- PostgreSQL tables: 21 (reduced from 28)
 
-GitHub, Neon PostgreSQL, n8n, Python, Apify, Apollo/Prospeo, MillionVerifier, NVIDIA, and Hugging Face.
+## Provider credential mapping
 
-## Current Verified Status
+| n8n credential | Provider |
+|---|---|
+| Query Auth account 3 | Apollo |
+| Query Auth account 2 | MillionVerifier |
+| Query Auth account | ScrapeGraphAI |
 
-- Neon PostgreSQL is active.
-- The pilot database contains 36 companies: 18 Hot and 18 Warm.
-- The pilot contains 25 contacts, including 18 with email and 19 with phone.
-- There are 18 outreach drafts; none are approved or sent.
-- Workflow 01, `workflows/n8n/01-campaign-icp-builder.json`, is committed as a credential-free draft.
-- Workflow 01 builds campaign settings, validates inputs, creates bilingual ICP/search plans, applies provider cost controls, and keeps automatic sending disabled.
-- Live n8n import and end-to-end execution are not yet proven.
-- The full Python scripts, SQL migrations, test suite, campaign files, and remaining workflow exports are not yet fully backed up in this repository.
-- Current label: `V1 Python Pilot — under independent validation`.
-
-## Operational Guardrail
-
-Do not activate autonomous outreach yet. Evidence quality, mailbox-level email verification, retry handling, controlled failure recovery, sending controls, reply monitoring, and RFQ extraction must pass testing first.
-
-## Next Build Priority
-
-Connect Workflow 01 to Neon and prove one complete controlled path:
-
-`campaign input → validation → ICP/search plan → database logging → outreach draft`
+Credentials exist, but provider workers are not yet active and no provider API call was executed in the latest hardening phase.
 
 ## Documentation
 
-See the `docs/` folder for scope, architecture, integrations, n8n recovery, current status, security, disaster recovery, and repository backup status.
+- [Implementation status](docs/implementation-status-2026-06-27.md)
+- [Workflow inventory](docs/workflows.md)
+- [Database architecture](docs/database-schema.md)
+- [Cleanup plan](docs/cleanup-plan.md)
+- [Provider integration map](docs/provider-integrations.md)
+- [Changelog](CHANGELOG.md)
 
-## Security
+## Database cleanup completed
 
-Never commit real `.env` files, API keys, database passwords, service-account files, or n8n credentials.
+The schema was reduced from 28 to 21 tables. Duplicate verification, send-control, Expo, ScrapeGraph-result, and NVIDIA pilot tables were removed after their data was migrated or archived.
 
-Internal use only — Ocean Bridge Trading.
+## Important distinction
+
+The system is **fully modeled** through commission tracking, but it is not yet production-live. Provider calls, authenticated webhooks, mailbox reply ingestion, and email sending still require controlled activation and testing.
