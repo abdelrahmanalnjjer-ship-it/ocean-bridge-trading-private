@@ -1,55 +1,40 @@
-# Secrets
-.env
-.env.*
-!.env.example
-*.pem
-*.key
-*.p12
-*.pfx
-secrets/
-credentials/
-n8n-data/
-
+```
 # Python
 __pycache__/
 *.py[cod]
-.venv/
-venv/
-.pytest_cache/
-.mypy_cache/
-.coverage
-htmlcov/
-
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Generated and local runtime files
-logs/
-*.log
-*.tmp
-*.bak
-*.backup
-.cache/
-dist/
+*$py.class
+*.so
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Sensitive exports and local databases
-outputs/private/
-data/raw/
-data/exports/private/
-*.sqlite
-*.db
+# Virtual environments
+venv/
+ENV/
+env.bak/
+.venv/
 
-# IDE and OS
-.vscode/
-.idea/
-*.swp
-*.swo
-.DS_Store
-Thumbs.db
+# Environment variables
+.env
+.env.local
+.env.*
 
-# n8n runtime data
-.n8n/
+# Alembic
+alembic/versions/
+
+# Logs
+*.log
+```
