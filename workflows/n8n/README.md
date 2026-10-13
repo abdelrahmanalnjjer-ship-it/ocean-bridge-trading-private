@@ -1,28 +1,25 @@
-# n8n Workflow Exports
+# n8n Workflow Inventory
 
-Place the 16 credential-free n8n workflow JSON exports in this folder.
+This directory tracks the deployed Ocean Bridge workflow set.
 
-Required naming:
+| Number | Workflow | n8n ID | Active |
+|---|---|---|---:|
+| 00 | Seafood Product Intelligence Sync | `tjyNVdli2GDekLOQ` | No |
+| 01 | Ocean Bridge Campaign & ICP Builder | `OI6bDJTZ2iBX4Vvn` | Yes |
+| 02 | Search and Company Collection | `sdH96TyffJ5nlFUl` | Yes |
 
-```text
-01-campaign-icp-builder.json
-02-csv-source-ingestion.json
-03-search-source-ingestion.json
-04-cleaning-deduplication.json
-05-website-crawler.json
-06-pre-scoring.json
-07-contact-enrichment.json
-08-contact-verification.json
-09-final-scoring.json
-10-personalization.json
-11-outreach-review-export.json
-12-buyer-requirement-intake.json
-13-supplier-offer-intake.json
-14-buyer-supplier-matching.json
-15-quotation-preparation.json
-16-reporting-costs.json
-```
+Detailed node behavior, data contracts, and database effects are documented in:
 
-Each workflow must document its trigger, required credentials, input, output, Neon tables touched, status transitions, retry policy, stop conditions, cost events, and last successful test date.
+- `docs/workflows-database-schema.md`
+- `docs/current-system-status.md`
 
-See `docs/N8N_BACKUP_RESTORE.md`.
+## Security rules
+
+- No public database-writing webhook is enabled for Workflow 01 or Workflow 02.
+- Workflow 00 remains inactive because its webhook has no authentication.
+- Automatic outreach is disabled.
+- Commercial commitments require human approval.
+
+## Export policy
+
+After each material n8n change, export the updated workflow JSON into this directory and commit it together with the related schema or documentation change.
